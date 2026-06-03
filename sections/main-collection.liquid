@@ -1,0 +1,62 @@
+{% paginate collection.products by section.settings.products_per_page %}
+
+<section class="hairline-b" style="padding-top:64px;padding-bottom:48px;">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:24px;">
+      <a href="{{ routes.root_url }}" class="link-mute">Home</a> · {{ collection.title }}
+    </div>
+    <h1 class="display h1" style="margin:0;">{{ collection.title }}<span class="text-lime">.</span></h1>
+    {%- if collection.description != blank -%}
+      <div class="text-mute" style="font-size:14px;margin-top:24px;max-width:480px;">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="hairline-b">
+  <div class="container" style="padding-top:20px;padding-bottom:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-text-mute);">
+    <div>
+      {{ collection.products_count }} {% if collection.products_count == 1 %}item{% else %}items{% endif %}
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <label for="sort">Sort:</label>
+      <select id="sort" name="sort_by" onchange="window.location.href=this.value">
+        {%- assign sorts = 'manual|Featured,best-selling|Best selling,title-ascending|A → Z,price-ascending|Price · Low → High,price-descending|Price · High → Low,created-descending|New arrivals' | split: ',' -%}
+        {%- for s in sorts -%}
+          {%- assign parts = s | split: '|' -%}
+          <option value="?sort_by={{ parts[0] }}" {% if collection.sort_by == parts[0] %}selected{% endif %}>{{ parts[1] }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:64px;padding-bottom:80px;">
+  <div class="container">
+    {%- if collection.products.size > 0 -%}
+      <div class="product-grid" data-reveal>
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+
+      {% render 'pagination', paginate: paginate %}
+    {%- else -%}
+      <div style="text-align:center;padding:80px 0;color:var(--bt-text-mute);">
+        <div class="display h3" style="color:var(--bt-text);">Nothing here yet<span class="text-lime">.</span></div>
+        <p style="margin-top:16px;">New products land every Friday at 8PM EST.</p>
+        <a href="{{ routes.root_url }}" class="btn-ghost" style="margin-top:32px;">Back home</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 16 }
+  ]
+}
+{% endschema %}

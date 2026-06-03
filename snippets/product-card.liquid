@@ -1,0 +1,43 @@
+{% comment %}
+  Usage: {% render 'product-card', product: product %}
+  Renders one product card matching the BudgetThrills design.
+  Uses primary image + first additional image (if present) for hover crossfade.
+{% endcomment %}
+
+{%- assign primary_img = product.featured_image -%}
+{%- assign hover_img = product.images[1] | default: product.featured_image -%}
+
+<a href="{{ product.url }}" class="card" aria-label="{{ product.title | escape }}">
+  <div class="card-media">
+    {%- if primary_img -%}
+      <img class="img-primary"
+           src="{{ primary_img | image_url: width: 800 }}"
+           srcset="{{ primary_img | image_url: width: 400 }} 400w,
+                   {{ primary_img | image_url: width: 800 }} 800w,
+                   {{ primary_img | image_url: width: 1200 }} 1200w"
+           sizes="(min-width: 1024px) 25vw, 50vw"
+           alt="{{ primary_img.alt | default: product.title | escape }}"
+           loading="lazy"
+           width="800" height="1000">
+    {%- endif -%}
+    {%- if hover_img and hover_img != primary_img -%}
+      <img class="img-hover"
+           src="{{ hover_img | image_url: width: 800 }}"
+           alt=""
+           loading="lazy"
+           width="800" height="1000">
+    {%- endif -%}
+    <span class="card-cta">View →</span>
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">{{ product.title }}</h3>
+    {%- if product.metafields.custom.subtitle != blank -%}
+      <div class="card-meta">{{ product.metafields.custom.subtitle }}</div>
+    {%- elsif product.options.size > 0 and product.options_with_values.first.values.size > 1 -%}
+      <div class="card-meta">{{ product.options_with_values.first.values | join: ' / ' | truncate: 32 }}</div>
+    {%- endif -%}
+    <div class="card-price">
+      {% render 'price', product: product %}
+    </div>
+  </div>
+</a>

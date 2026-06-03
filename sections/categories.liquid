@@ -1,0 +1,61 @@
+<section class="hairline-b">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="eyebrow" style="padding:40px 0;">{{ section.settings.eyebrow | escape }}</div>
+    {%- endif -%}
+    <div class="cat-grid hairline-t" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- assign idx = forloop.index | prepend: '0' | slice: -2, 2 -%}
+        <a href="{{ block.settings.link }}" class="cat-cell" {{ block.shopify_attributes }}>
+          <div class="text-mute" style="font-size:12px;">{{ idx }}</div>
+          <div class="display h3 cat-label">{{ block.settings.label | escape }}</div>
+          {%- if block.settings.meta != blank -%}
+            <div class="text-mute" style="font-size:14px;margin-top:12px;">{{ block.settings.meta | escape }}</div>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cat-grid { display:grid; grid-template-columns:1fr; }
+  .cat-cell { display:block; padding:56px 0; }
+  .cat-label { margin-top:16px; transition: color .2s; }
+  .cat-cell:hover .cat-label { color: var(--bt-lime); }
+  @media (min-width: 768px) {
+    .cat-grid { grid-template-columns: repeat({{ section.blocks.size }}, 1fr); }
+    .cat-cell { padding: 80px 40px 80px 0; border-right: 1px solid var(--bt-border); }
+    .cat-cell:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Category strip",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Sneakers" },
+        { "type": "text", "id": "meta", "label": "Meta line (e.g. From $19.99)", "default": "From $19.99" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Categories" }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "category", "settings": { "label": "Sneakers", "meta": "From $24.99" } },
+      { "type": "category", "settings": { "label": "Apparel", "meta": "From $28.99" } },
+      { "type": "category", "settings": { "label": "Accessories", "meta": "From $34.99" } },
+      { "type": "category", "settings": { "label": "Tech", "meta": "From $40.99" } }
+    ]
+  },
+  "presets": [{ "name": "Category strip" }]
+}
+{% endschema %}

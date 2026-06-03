@@ -1,0 +1,91 @@
+<header class="nav-shell">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name }} home">
+        {%- if settings.logo_dark != blank -%}
+          <img src="{{ settings.logo_dark | image_url: width: 600 }}"
+               alt="{{ shop.name }}"
+               width="200" height="{{ settings.logo_height }}"
+               loading="eager"
+               class="logo-darkmode">
+          {%- if settings.logo_light != blank -%}
+            <img src="{{ settings.logo_light | image_url: width: 600 }}"
+                 alt="{{ shop.name }}"
+                 width="200" height="{{ settings.logo_height }}"
+                 loading="eager"
+                 class="logo-lightmode"
+                 style="display:none;">
+          {%- endif -%}
+        {%- else -%}
+          <img src="{{ 'logo-dark.svg' | asset_url }}"
+               alt="{{ shop.name }}"
+               width="200" height="{{ settings.logo_height }}"
+               class="logo-darkmode">
+          <img src="{{ 'logo-light.svg' | asset_url }}"
+               alt="{{ shop.name }}"
+               width="200" height="{{ settings.logo_height }}"
+               class="logo-lightmode"
+               style="display:none;">
+        {%- endif -%}
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a href="{{ link.url }}"{% if link.active %} class="active"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+
+      <div class="nav-actions">
+        <a href="{{ routes.search_url }}" aria-label="Search" class="nav-action-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </a>
+
+        {%- if shop.customer_accounts_enabled -%}
+          {%- if customer -%}
+            <a href="{{ routes.account_url }}" aria-label="Account">Account</a>
+          {%- else -%}
+            <a href="{{ routes.account_login_url }}" aria-label="Sign in">Sign in</a>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if settings.show_theme_toggle -%}
+          <button data-theme-toggle class="theme-toggle" type="button" aria-label="Toggle theme">
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+          </button>
+        {%- endif -%}
+
+        <a href="{{ routes.cart_url }}" aria-label="Cart">
+          Cart <span data-cart-count class="cart-count" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  html[data-theme="light"] .logo-darkmode { display: none; }
+  html[data-theme="light"] .logo-lightmode { display: inline-block !important; }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    }
+  ],
+  "presets": [{ "name": "Header" }]
+}
+{% endschema %}

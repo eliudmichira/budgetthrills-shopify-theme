@@ -1,0 +1,87 @@
+{%- assign product = all_products[section.settings.product] -%}
+
+<section class="section-py hairline-t hairline-b">
+  <div class="container">
+    <div class="deal-grid">
+
+      <div data-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="eyebrow" style="margin-bottom:16px;">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        <h2 class="display h2" style="margin:0;line-height:.9;">
+          {{ section.settings.heading_line_1 | escape }}<br>{{ section.settings.heading_line_2 | escape }}<span class="text-lime">.</span>
+        </h2>
+
+        <div class="cd" style="margin-top:48px;">
+          <span id="cd-h" class="cd-num">00</span>
+          <span class="cd-sep">:</span>
+          <span id="cd-m" class="cd-num">00</span>
+          <span class="cd-sep">:</span>
+          <span id="cd-s" class="cd-num">00</span>
+        </div>
+        <div class="cd-labels"><span>Hours</span><span>Minutes</span><span>Seconds</span></div>
+
+        {%- if product != blank or section.settings.cta_url != blank -%}
+          <a href="{{ product.url | default: section.settings.cta_url }}" class="btn-lime" style="margin-top:48px;">
+            {{ section.settings.cta_text | escape }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div data-reveal>
+        {%- if product != blank -%}
+          <a href="{{ product.url }}" class="card-media" style="display:block;aspect-ratio:4/3;">
+            <img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.title | escape }}">
+          </a>
+          <div class="deal-meta">
+            <div>
+              <div class="text-mute" style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;">Tonight</div>
+              <h3 class="display h3" style="margin-top:8px;">{{ product.title }}<span class="text-lime">.</span></h3>
+              {%- if product.description != blank -%}
+                <p class="text-mute" style="font-size:14px;margin-top:12px;max-width:320px;">{{ product.description | strip_html | truncate: 110 }}</p>
+              {%- endif -%}
+            </div>
+            <div class="deal-price">
+              {%- if product.compare_at_price > product.price -%}
+                <div class="text-mute" style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;">Was {{ product.compare_at_price | money }}</div>
+              {%- endif -%}
+              <div class="display" style="font-size:56px;margin-top:4px;line-height:1;">{{ product.price | money_without_currency }}<span class="text-mute" style="font-size:20px;vertical-align:top;">{{ cart.currency.iso_code }}</span></div>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="card-media" style="aspect-ratio:4/3;background:var(--bt-bg-elev);display:flex;align-items:center;justify-content:center;color:var(--bt-text-mute);">
+            [ Pick a deal product in editor ]
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .deal-grid { display:grid; grid-template-columns:1fr; gap:64px; align-items:center; }
+  .deal-meta { display:grid; grid-template-columns:1fr; gap:24px; margin-top:24px; align-items:end; }
+  .deal-price { text-align:left; }
+  @media (min-width: 1024px) {
+    .deal-grid { grid-template-columns: 5fr 7fr; }
+    .deal-meta { grid-template-columns: 1fr 1fr; }
+    .deal-price { text-align:right; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Deal of the day",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ends Tonight" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "One drop." },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "One night" },
+    { "type": "product", "id": "product", "label": "Featured product" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Cop the deal" },
+    { "type": "url", "id": "cta_url", "label": "Fallback CTA link (if no product picked)" }
+  ],
+  "presets": [{ "name": "Deal of the day" }]
+}
+{% endschema %}

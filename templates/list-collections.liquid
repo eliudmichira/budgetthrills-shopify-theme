@@ -1,0 +1,27 @@
+<section class="section-py">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:32px;">All Collections</div>
+    <h1 class="display h1" style="margin:0;">Shop everything<span class="text-lime">.</span></h1>
+
+    <div class="product-grid" style="margin-top:64px;" data-reveal>
+      {%- for collection in collections -%}
+        {%- if collection.handle != 'frontpage' -%}
+          <a href="{{ collection.url }}" class="card">
+            <div class="card-media">
+              {%- if collection.image -%}
+                <img src="{{ collection.image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" loading="lazy">
+              {%- elsif collection.products.first.featured_image -%}
+                <img src="{{ collection.products.first.featured_image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" loading="lazy">
+              {%- endif -%}
+              <span class="card-cta">Shop →</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{ collection.title }}</h3>
+              <div class="card-meta">{{ collection.products_count }} items</div>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

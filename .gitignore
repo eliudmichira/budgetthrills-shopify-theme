@@ -1,0 +1,25 @@
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Shopify CLI artifacts
+.shopify/
+.shopifyignore
+*.shopify
+
+# Node (if you ever add CLI tooling)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Local env
+.env
+.env.local
+
+# Backup / temp
+*.bak
+*.tmp

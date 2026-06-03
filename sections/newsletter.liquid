@@ -1,0 +1,40 @@
+<section class="hairline-t section-py">
+  <div class="container" style="max-width:720px;text-align:center;" data-reveal>
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="eyebrow" style="margin-bottom:24px;">{{ section.settings.eyebrow | escape }}</div>
+    {%- endif -%}
+    <h2 class="display h2" style="margin:0;line-height:.9;">
+      {{ section.settings.heading_line_1 | escape }}<br>{{ section.settings.heading_line_2 | escape }}<span class="text-lime">.</span>
+    </h2>
+
+    {% form 'customer', class: 'nl-form', data-newsletter: '' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div style="display:flex;border-bottom:1px solid var(--bt-border);padding-bottom:12px;gap:16px;margin-top:56px;">
+        <input type="email" name="contact[email]" required placeholder="{{ section.settings.placeholder | escape }}"
+               style="flex:1;background:transparent;border:none;outline:none;padding:8px 0;font-size:16px;">
+        <button type="submit" style="background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bt-text);">{{ section.settings.button_text | escape }} →</button>
+      </div>
+      <p data-nl-out style="margin-top:16px;font-size:12px;color:var(--bt-lime);min-height:1em;">
+        {%- if form.posted_successfully? -%}
+          You're in. Check your inbox for the drop.
+        {%- elsif form.errors -%}
+          {{ form.errors | default_errors }}
+        {%- endif -%}
+      </p>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "VIP Drop List" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "Get the drop" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "before the crowd" },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "you@get.thrilled" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Join" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

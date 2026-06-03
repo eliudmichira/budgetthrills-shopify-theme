@@ -1,0 +1,25 @@
+<section class="section-py">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:24px;">Journal</div>
+    <h1 class="display h2" style="margin:0;">{{ blog.title }}<span class="text-lime">.</span></h1>
+
+    {% paginate blog.articles by 12 %}
+      <div class="product-grid" style="margin-top:64px;" data-reveal>
+        {%- for article in blog.articles -%}
+          <a href="{{ article.url }}" class="card">
+            <div class="card-media">
+              {%- if article.image -%}
+                <img class="img-primary" src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title | escape }}" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div class="card-body">
+              <div class="card-meta">{{ article.published_at | date: '%b %d, %Y' }}</div>
+              <h3 class="card-title" style="margin-top:6px;">{{ article.title }}</h3>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {% endpaginate %}
+  </div>
+</section>

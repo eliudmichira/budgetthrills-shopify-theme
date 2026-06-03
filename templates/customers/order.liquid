@@ -1,0 +1,38 @@
+<section class="section-py">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:24px;">
+      <a href="{{ routes.account_url }}" class="link-mute">Account</a> · Order {{ order.name }}
+    </div>
+    <h1 class="display h3" style="margin:0;">Order {{ order.name }}<span class="text-lime">.</span></h1>
+    <div class="text-mute" style="font-size:13px;margin-top:16px;letter-spacing:.18em;text-transform:uppercase;">
+      Placed {{ order.created_at | date: '%b %d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}
+    </div>
+
+    <div style="margin-top:48px;border-top:1px solid var(--bt-border);">
+      {%- for line_item in order.line_items -%}
+        <div class="cart-line">
+          <div class="cart-line-media">
+            {%- if line_item.image -%}
+              <img src="{{ line_item.image | image_url: width: 400 }}" alt="{{ line_item.title | escape }}">
+            {%- endif -%}
+          </div>
+          <div>
+            <a href="{{ line_item.product.url }}" style="font-weight:500;">{{ line_item.product.title }}</a>
+            {%- if line_item.variant.title != 'Default Title' -%}
+              <div class="text-mute" style="font-size:12px;margin-top:4px;">{{ line_item.variant.title }}</div>
+            {%- endif -%}
+            <div class="text-mute" style="font-size:12px;margin-top:8px;">Qty: {{ line_item.quantity }}</div>
+          </div>
+          <div style="text-align:right;font-weight:600;">{{ line_item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div style="margin-top:32px;display:grid;grid-template-columns:1fr;gap:16px;max-width:400px;margin-left:auto;">
+      <div style="display:flex;justify-content:space-between;font-size:14px;"><span class="text-mute">Subtotal</span><span>{{ order.subtotal_price | money }}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;"><span class="text-mute">Shipping</span><span>{{ order.shipping_price | money }}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;"><span class="text-mute">Tax</span><span>{{ order.tax_price | money }}</span></div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;padding-top:12px;border-top:1px solid var(--bt-border);"><span>Total</span><span>{{ order.total_price | money }}</span></div>
+    </div>
+  </div>
+</section>

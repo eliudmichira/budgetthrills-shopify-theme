@@ -1,0 +1,18 @@
+<section class="section-py">
+  <div class="container" style="max-width:480px;">
+    <h1 class="display h3" style="margin:0;">Activate account<span class="text-lime">.</span></h1>
+    <p class="text-mute" style="margin-top:16px;font-size:14px;">Set your password to finish signing up.</p>
+
+    {% form 'activate_customer_password' %}
+      <div style="display:grid;gap:16px;margin-top:40px;">
+        <input type="password" name="customer[password]" placeholder="Password" required autocomplete="new-password">
+        <input type="password" name="customer[password_confirmation]" placeholder="Confirm password" required autocomplete="new-password">
+        {%- if form.errors -%}
+          <div class="text-orange" style="font-size:13px;">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+        <button type="submit" class="btn-lime btn-block">Activate</button>
+        <a href="{{ routes.account_login_url }}" class="link-mute" style="text-align:center;font-size:13px;">Cancel</a>
+      </div>
+    {% endform %}
+  </div>
+</section>

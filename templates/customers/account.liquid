@@ -1,0 +1,41 @@
+<section class="section-py">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:24px;">My account</div>
+    <h1 class="display h2" style="margin:0;">Welcome back<span class="text-lime">.</span></h1>
+    <div class="text-mute" style="font-size:14px;margin-top:16px;">{{ customer.first_name | default: customer.email }}</div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:32px;margin-top:48px;">
+
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;">
+          <h2 class="display h3" style="margin:0;">Orders</h2>
+          <a href="{{ routes.account_url }}" class="link-mute" style="font-size:13px;">All →</a>
+        </div>
+        {%- if customer.orders.size > 0 -%}
+          <div style="border-top:1px solid var(--bt-border);">
+            {%- for order in customer.orders limit: 10 -%}
+              <a href="{{ order.customer_url }}" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:20px;padding:20px 0;border-bottom:1px solid var(--bt-border);align-items:center;font-size:14px;">
+                <span>{{ order.name }}</span>
+                <span class="text-mute">{{ order.created_at | date: '%b %d, %Y' }}</span>
+                <span>{{ order.total_price | money }}</span>
+                <span class="text-lime" style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;">{{ order.financial_status_label }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <p class="text-mute" style="font-size:14px;">No orders yet. Time to fix that.</p>
+          <a href="{{ routes.root_url }}" class="btn-lime" style="margin-top:16px;">Shop the drop</a>
+        {%- endif -%}
+      </div>
+
+      <div style="margin-top:48px;">
+        <h2 class="display h3" style="margin:0 0 24px;">Addresses</h2>
+        <a href="{{ routes.account_addresses_url }}" class="btn-ghost">Manage addresses</a>
+      </div>
+
+      <div style="margin-top:24px;">
+        <a href="{{ routes.account_logout_url }}" class="link-mute" style="font-size:13px;">Sign out</a>
+      </div>
+    </div>
+  </div>
+</section>

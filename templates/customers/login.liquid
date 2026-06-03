@@ -1,0 +1,29 @@
+<section class="section-py">
+  <div class="container" style="max-width:480px;">
+    <div class="eyebrow" style="margin-bottom:24px;">Account</div>
+    <h1 class="display h3" style="margin:0;">Sign in<span class="text-lime">.</span></h1>
+
+    {% form 'customer_login' %}
+      <div style="display:grid;gap:16px;margin-top:40px;">
+        <input type="email" name="customer[email]" placeholder="Email" required autocomplete="email">
+        <input type="password" name="customer[password]" placeholder="Password" required autocomplete="current-password">
+        {%- if form.errors -%}
+          <div class="text-orange" style="font-size:13px;">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+        <button type="submit" class="btn-lime btn-block" style="margin-top:8px;">Sign in</button>
+      </div>
+    {% endform %}
+
+    <div style="margin-top:24px;text-align:center;font-size:13px;color:var(--bt-text-mute);">
+      <a href="{{ routes.account_recover_url }}" class="link-mute">Forgot password</a>
+      &middot;
+      <a href="{{ routes.account_register_url }}" class="link-mute">Create account</a>
+    </div>
+
+    {% form 'recover_customer_password' %}
+      {%- if form.posted_successfully? -%}
+        <div class="text-lime" style="margin-top:24px;font-size:13px;text-align:center;">Reset link sent. Check your inbox.</div>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>

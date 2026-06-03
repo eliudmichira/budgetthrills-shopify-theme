@@ -1,0 +1,33 @@
+<section class="hairline-t section-py">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;" data-reveal>
+      <h2 class="display h3" style="margin:0;">{{ section.settings.heading | escape }}<span class="text-lime">.</span></h2>
+      {%- if product.collections.first -%}
+        <a href="{{ product.collections.first.url }}" class="link-mute" style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;">View all →</a>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- assign related_collection = product.collections.first -%}
+      {%- if related_collection -%}
+        {%- assign shown = 0 -%}
+        {%- for p in related_collection.products -%}
+          {%- if p.id != product.id and shown < section.settings.products_to_show -%}
+            {% render 'product-card', product: p %}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More from this drop" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 8, "step": 2, "default": 4 }
+  ]
+}
+{% endschema %}

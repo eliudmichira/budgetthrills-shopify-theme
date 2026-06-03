@@ -1,0 +1,27 @@
+<section class="section-py">
+  <div class="container">
+    <div class="eyebrow" style="margin-bottom:24px;">
+      <a href="{{ routes.account_url }}" class="link-mute">Account</a> · Addresses
+    </div>
+    <h1 class="display h3" style="margin:0;">Your addresses<span class="text-lime">.</span></h1>
+
+    <div style="margin-top:48px;display:grid;grid-template-columns:1fr;gap:32px;">
+      {%- for address in customer.addresses -%}
+        <div style="border:1px solid var(--bt-border);padding:24px;">
+          <div style="font-weight:600;">{{ address.first_name }} {{ address.last_name }}</div>
+          <div class="text-mute" style="font-size:14px;margin-top:8px;">
+            {{ address.address1 }}<br>
+            {%- if address.address2 -%}{{ address.address2 }}<br>{%- endif -%}
+            {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+            {{ address.country }}
+          </div>
+          {%- if address == customer.default_address -%}
+            <div class="text-lime" style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:12px;">Default</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <a href="{{ routes.account_url }}" class="link-mute" style="margin-top:48px;display:inline-block;font-size:13px;">← Back to account</a>
+  </div>
+</section>

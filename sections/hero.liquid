@@ -1,0 +1,76 @@
+<section class="hero-canvas">
+  <div class="container" style="padding-top:80px;padding-bottom:96px;">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="eyebrow" style="margin-bottom:32px;" data-reveal>{{ section.settings.eyebrow | escape }}</div>
+    {%- endif -%}
+
+    <h1 class="display h-hero">
+      {%- if section.settings.line_1 != blank -%}
+        <span style="display:block;"><span data-split="chars" data-stagger="0.025">{{ section.settings.line_1 | escape }}</span></span>
+      {%- endif -%}
+      {%- if section.settings.line_2 != blank -%}
+        <span style="display:block;"><span data-split="chars" data-stagger="0.025" data-delay="0.12">{{ section.settings.line_2 | escape }}</span></span>
+      {%- endif -%}
+      {%- if section.settings.line_3_prefix != blank or section.settings.line_3_accent != blank -%}
+        <span style="display:block;">
+          {%- if section.settings.line_3_prefix != blank -%}
+            <span data-split="chars" data-stagger="0.025" data-delay="0.24">{{ section.settings.line_3_prefix | escape }} </span>
+          {%- endif -%}
+          {%- if section.settings.line_3_accent != blank -%}
+            <span class="text-lime"><span data-split="chars" data-stagger="0.025" data-delay="0.36">{{ section.settings.line_3_accent | escape }}</span></span>
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.line_4 != blank -%}
+        <span style="display:block;"><span data-split="chars" data-stagger="0.025" data-delay="0.48">{{ section.settings.line_4 | escape }}</span><span class="text-lime">.</span></span>
+      {%- endif -%}
+    </h1>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:40px;margin-top:64px;align-items:end;" class="hero-foot" data-reveal>
+      {%- if section.settings.intro != blank -%}
+        <p class="text-mute" style="font-size:18px;line-height:1.6;max-width:480px;margin:0;">
+          {{ section.settings.intro | escape }}
+        </p>
+      {%- endif -%}
+      <div style="display:flex;flex-wrap:wrap;gap:16px;">
+        {%- if section.settings.cta_primary_text != blank -%}
+          <a href="{{ section.settings.cta_primary_url | default: '#' }}" class="btn-lime">
+            {{ section.settings.cta_primary_text | escape }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_text != blank -%}
+          <a href="{{ section.settings.cta_secondary_url | default: '#' }}" class="btn-ghost">{{ section.settings.cta_secondary_text | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 640px) {
+    .hero-foot { grid-template-columns: repeat(12, 1fr) !important; }
+    .hero-foot > p { grid-column: span 5; }
+    .hero-foot > div:last-child { grid-column: span 7; justify-content: flex-end; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Drop 04 — The Neon" },
+    { "type": "text", "id": "line_1", "label": "Line 1", "default": "Shoes" },
+    { "type": "text", "id": "line_2", "label": "Line 2", "default": "& Tech" },
+    { "type": "text", "id": "line_3_prefix", "label": "Line 3 — prefix", "default": "You" },
+    { "type": "text", "id": "line_3_accent", "label": "Line 3 — accent (lime)", "default": "Actually" },
+    { "type": "text", "id": "line_4", "label": "Line 4", "default": "Want" },
+    { "type": "textarea", "id": "intro", "label": "Sub-headline", "default": "Trendy finds. Budget prices. Real thrills. Built for people who like nice things and keeping receipts." },
+    { "type": "text", "id": "cta_primary_text", "label": "Primary CTA text", "default": "Shop the drop" },
+    { "type": "url", "id": "cta_primary_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secondary CTA text", "default": "Today's deals" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Secondary CTA link" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

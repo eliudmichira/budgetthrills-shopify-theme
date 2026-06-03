@@ -1,0 +1,184 @@
+<section class="section-py" style="padding-top:40px;">
+  <div class="container">
+
+    <div class="eyebrow" style="margin-bottom:32px;">
+      <a href="{{ routes.root_url }}" class="link-mute">Home</a>
+      {%- if collection -%} · <a href="{{ collection.url }}" class="link-mute">{{ collection.title }}</a>{%- endif -%}
+      · {{ product.title | truncate: 40 }}
+    </div>
+
+    <div class="pdp-grid">
+
+      {%- comment %} Gallery {% endcomment -%}
+      <div data-gallery>
+        <div data-gallery-main class="gallery-main">
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 1400 }}"
+                 alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                 width="1400" height="1750">
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="thumb-row">
+            {%- for image in product.images limit: 5 -%}
+              <button type="button" class="thumb{% if forloop.first %} active{% endif %}" data-image-full="{{ image | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 400 }}" alt="">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment %} Buy box {% endcomment -%}
+      <div class="pdp-buy">
+        {%- if product.vendor != blank and section.settings.show_vendor -%}
+          <div class="eyebrow" style="margin-bottom:12px;">{{ product.vendor }}</div>
+        {%- endif -%}
+
+        <h1 class="display h3" style="line-height:.9;">{{ product.title }}<span class="text-lime">.</span></h1>
+
+        <div style="margin-top:20px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;">
+          <span style="font-size:24px;font-weight:600;">{{ product.selected_or_first_available_variant.price | money }}</span>
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <span class="text-mute" style="text-decoration:line-through;">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+            {%- assign pct = product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price -%}
+            {%- assign save = 100 | minus: pct | round -%}
+            <span class="text-lime" style="font-size:12px;text-transform:uppercase;letter-spacing:.2em;font-weight:700;">Save {{ save }}%</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="text-mute" style="font-size:14px;margin-top:16px;line-height:1.6;">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- form 'product', product, data-product-form: '' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- comment %} Render options as swatches (Color) and sizes (Size) {% endcomment -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign opt_name = option.name | downcase -%}
+            <div style="margin-top:40px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;">{{ option.name }}</div>
+                {%- if opt_name contains 'color' -%}
+                  <div class="text-mute" style="font-size:12px;" data-color-label>{{ option.selected_value }}</div>
+                {%- elsif opt_name contains 'size' -%}
+                  <a href="#size-guide" class="text-mute" style="font-size:12px;">Size guide →</a>
+                {%- endif -%}
+              </div>
+
+              {%- if opt_name contains 'color' -%}
+                <div class="swatch-row" data-swatches>
+                  {%- for value in option.values -%}
+                    <button type="button" class="swatch{% if value == option.selected_value %} active{% endif %}" data-color="{{ value | escape }}" aria-label="{{ value | escape }}">
+                      <span style="background:{{ value | downcase | replace: ' ', '' | replace: '/', '' | prepend: '#' | truncate: 7, '' }};"></span>
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- elsif opt_name contains 'size' -%}
+                <div class="size-row" data-sizes>
+                  {%- for value in option.values -%}
+                    {%- assign variant_for_size = product.variants | where: 'title', value | first -%}
+                    <button type="button" class="size{% if value == option.selected_value %} active{% endif %}"
+                            {% if variant_for_size and variant_for_size.available == false %}disabled{% endif %}
+                            data-variant-id="{{ variant_for_size.id }}">{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <select name="options[{{ option.name | escape }}]" style="width:100%;">
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}" {% if value == option.selected_value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+
+          <div style="margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <div class="qty">
+              <button type="button" data-qty-down aria-label="Decrease">−</button>
+              <input type="text" name="quantity" value="1" inputmode="numeric">
+              <button type="button" data-qty-up aria-label="Increase">+</button>
+            </div>
+            <button type="submit" class="btn-lime btn-block" style="flex:1;min-width:200px;">
+              {%- if product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        {%- if section.settings.show_reassurance -%}
+          <ul style="margin-top:32px;padding:0;list-style:none;font-size:14px;color:var(--bt-text-mute);">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'reassurance' -%}
+                <li style="display:flex;gap:12px;margin-bottom:12px;" {{ block.shopify_attributes }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-top:2px;flex-shrink:0;color:var(--bt-lime);"><path d="M5 13l4 4L19 7"/></svg>
+                  <span>{{ block.settings.text | escape }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment %} Details / Materials / Shipping accordion-ish {% endcomment -%}
+    <div style="margin-top:96px;padding-top:64px;border-top:1px solid var(--bt-border);display:grid;grid-template-columns:1fr;gap:48px;" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'info_column' -%}
+          <div {{ block.shopify_attributes }}>
+            <div class="eyebrow" style="margin-bottom:16px;">{{ block.settings.heading | escape }}</div>
+            <div class="text-mute" style="font-size:14px;line-height:1.6;">{{ block.settings.body }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pdp-buy { position: relative; }
+  @media (min-width: 1024px) {
+    .pdp-buy { position: sticky; top: 112px; align-self: start; }
+  }
+  [data-reveal][data-reveal][data-reveal] { /* boost specificity above */ }
+  @media (min-width: 768px) {
+    section.section-py > .container > div[data-reveal]:last-child { grid-template-columns: repeat(3, 1fr) !important; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor name", "default": true },
+    { "type": "checkbox", "id": "show_reassurance", "label": "Show reassurance bullets", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "reassurance",
+      "name": "Reassurance bullet",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $50" }
+      ]
+    },
+    {
+      "type": "info_column",
+      "name": "Info column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Details" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Lightweight knit upper. Rubber outsole. 8mm drop. Designed for daily wear.</p>" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "reassurance", "settings": { "text": "Free US shipping over $50" } },
+      { "type": "reassurance", "settings": { "text": "5–10 day delivery · US warehouses" } },
+      { "type": "reassurance", "settings": { "text": "30-day no-question returns" } },
+      { "type": "info_column", "settings": { "heading": "Details", "body": "<p>Details about the product live here. Editable from the theme customizer.</p>" } },
+      { "type": "info_column", "settings": { "heading": "Materials", "body": "<p>Material breakdown lives here. Editable from the theme customizer.</p>" } },
+      { "type": "info_column", "settings": { "heading": "Shipping", "body": "<p>Shipping policy details. Editable from the theme customizer.</p>" } }
+    ]
+  }
+}
+{% endschema %}

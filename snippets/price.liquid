@@ -1,0 +1,21 @@
+{% comment %}
+  Usage:
+    {% render 'price', product: product %}
+    {% render 'price', product: product, use_variant: true %}
+  Renders: current price + compare-at strikethrough when on sale.
+{% endcomment %}
+
+{%- liquid
+  if use_variant and product.selected_or_first_available_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+-%}
+
+<span class="bt-price">
+  <span class="price">{{ target.price | money }}</span>
+  {%- if target.compare_at_price > target.price -%}
+    <span class="compare">{{ target.compare_at_price | money }}</span>
+  {%- endif -%}
+</span>

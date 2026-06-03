@@ -1,0 +1,117 @@
+<section class="section-py">
+  <div class="container">
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap;" data-reveal>
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px;">Checking out</div>
+        <h1 class="display h2" style="margin:0;">Your cart<span class="text-lime">.</span></h1>
+      </div>
+      <div class="text-mute" style="font-size:14px;">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</div>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="cart-grid">
+
+          <div>
+            <div class="hairline-t"></div>
+            {%- for item in cart.items -%}
+              <div class="cart-line" data-line data-key="{{ item.key }}">
+                <a href="{{ item.url }}" class="cart-line-media">
+                  {%- if item.image -%}
+                    <img src="{{ item.image | image_url: width: 400 }}" alt="{{ item.title | escape }}">
+                  {%- endif -%}
+                </a>
+                <div>
+                  <a href="{{ item.url }}" style="font-weight:500;">{{ item.product.title }}</a>
+                  {%- if item.variant.title != 'Default Title' -%}
+                    <div class="text-mute" style="font-size:12px;margin-top:4px;">{{ item.variant.title }}</div>
+                  {%- endif -%}
+                  <div style="margin-top:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+                    <div class="qty">
+                      <button type="button" data-qty-down>−</button>
+                      <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                      <button type="button" data-qty-up>+</button>
+                    </div>
+                    <a href="{{ item.url_to_remove }}" style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bt-text-mute);">Remove</a>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-weight:600;">{{ item.final_line_price | money }}</div>
+                  {%- if item.original_line_price > item.final_line_price -%}
+                    <div class="text-mute" style="font-size:12px;text-decoration:line-through;margin-top:4px;">{{ item.original_line_price | money }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+
+            <a href="{{ routes.all_products_collection_url }}" class="link-mute" style="margin-top:40px;display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;">← Continue shopping</a>
+          </div>
+
+          <aside class="cart-summary">
+            <div class="hairline-t hairline-b" style="padding:32px 0;display:grid;gap:16px;">
+              <div style="display:flex;justify-content:space-between;font-size:14px;">
+                <span class="text-mute">Subtotal</span>
+                <span style="font-weight:600;">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:14px;">
+                <span class="text-mute">Shipping</span>
+                <span class="text-mute">Calc'd at checkout</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:14px;">
+                <span class="text-mute">Taxes</span>
+                <span class="text-mute">Calc'd at checkout</span>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding:24px 0;">
+              <span class="eyebrow">Total</span>
+              <span class="display" style="font-size:28px;">{{ cart.total_price | money }}</span>
+            </div>
+
+            {%- comment %} Update before checkout {% endcomment -%}
+            <button type="submit" name="update" class="btn-ghost btn-block" style="margin-bottom:12px;">Update cart</button>
+            <button type="submit" name="checkout" class="btn-lime btn-block">
+              Checkout
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="text-mute" style="margin-top:20px;font-size:12px;line-height:1.6;">
+              Secure checkout · Cards, Apple Pay, Shop Pay, PayPal supported.
+            </div>
+
+            {%- if section.settings.show_note -%}
+              <details style="margin-top:32px;">
+                <summary style="cursor:pointer;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-text-mute);">Order note</summary>
+                <textarea name="note" rows="3" style="width:100%;margin-top:12px;" placeholder="Anything we should know?">{{ cart.note }}</textarea>
+              </details>
+            {%- endif -%}
+          </aside>
+        </div>
+      </form>
+    {%- else -%}
+      <div style="text-align:center;padding:80px 0;">
+        <div class="display h3" style="margin:0;">Your cart's empty<span class="text-lime">.</span></div>
+        <p class="text-mute" style="margin-top:16px;font-size:14px;">Pick something up before it sells out.</p>
+        <a href="{{ routes.root_url }}" class="btn-lime" style="margin-top:32px;">Shop the drop</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .cart-grid { display:grid; grid-template-columns:1fr; gap:48px; }
+  @media (min-width: 1024px) {
+    .cart-grid { grid-template-columns: 8fr 4fr; gap: 64px; }
+    .cart-summary { position: sticky; top: 112px; align-self: start; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true }
+  ]
+}
+{% endschema %}

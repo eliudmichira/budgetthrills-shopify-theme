@@ -1,0 +1,87 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Drop 04 — The Neon",
+        "line_1": "Shoes",
+        "line_2": "& Tech",
+        "line_3_prefix": "You",
+        "line_3_accent": "Actually",
+        "line_4": "Want",
+        "intro": "Trendy finds. Budget prices. Real thrills. Built for people who like nice things and keeping receipts.",
+        "cta_primary_text": "Shop the drop",
+        "cta_primary_url": "shopify://collections/new-arrivals",
+        "cta_secondary_text": "Today's deals",
+        "cta_secondary_url": "shopify://collections/sale"
+      }
+    },
+    "categories": {
+      "type": "categories",
+      "settings": { "eyebrow": "The Categories" },
+      "blocks": {
+        "b1": { "type": "category", "settings": { "label": "Sneakers", "meta": "From $24.99" } },
+        "b2": { "type": "category", "settings": { "label": "Apparel", "meta": "From $28.99" } },
+        "b3": { "type": "category", "settings": { "label": "Accessories", "meta": "From $34.99" } },
+        "b4": { "type": "category", "settings": { "label": "Tech", "meta": "From $40.99" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "trending": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Currently",
+        "heading": "Trending",
+        "products_to_show": 4,
+        "show_view_all": true
+      }
+    },
+    "deal": {
+      "type": "deal-of-day",
+      "settings": {
+        "eyebrow": "Ends Tonight",
+        "heading_line_1": "One drop.",
+        "heading_line_2": "One night",
+        "cta_text": "Cop the deal"
+      }
+    },
+    "drop": {
+      "type": "featured-drop",
+      "settings": {
+        "eyebrow": "The Drop · 04",
+        "heading_line_1": "The Neon",
+        "heading_line_2": "Collection",
+        "body": "Six pieces. One vibe. Street-ready sneakers and tech accessories built for people who notice details — at prices that don't notice your wallet.",
+        "cta_text": "Shop collection",
+        "link_text": "Lookbook"
+      }
+    },
+    "ugc": {
+      "type": "ugc",
+      "settings": {
+        "eyebrow": "#BudgetThrills",
+        "heading_line_1": "In the",
+        "heading_line_2": "wild",
+        "link_text": "Tag us"
+      },
+      "blocks": {
+        "t1": { "type": "tile" },
+        "t2": { "type": "tile" },
+        "t3": { "type": "tile" },
+        "t4": { "type": "tile" }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "VIP Drop List",
+        "heading_line_1": "Get the drop",
+        "heading_line_2": "before the crowd",
+        "placeholder": "you@get.thrilled",
+        "button_text": "Join"
+      }
+    }
+  },
+  "order": ["hero", "categories", "trending", "deal", "drop", "ugc", "newsletter"]
+}

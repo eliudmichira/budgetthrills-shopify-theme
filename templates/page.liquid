@@ -1,0 +1,20 @@
+<section class="section-py">
+  <div class="container" style="max-width:720px;">
+    <div class="eyebrow" style="margin-bottom:24px;">
+      <a href="{{ routes.root_url }}" class="link-mute">Home</a>
+    </div>
+    <h1 class="display h2" style="margin:0;">{{ page.title }}<span class="text-lime">.</span></h1>
+    <div class="rte" style="margin-top:48px;font-size:16px;line-height:1.7;">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rte h2 { font-family:inherit; font-weight:700; margin-top:48px; margin-bottom:16px; font-size:24px; }
+  .rte h3 { font-family:inherit; font-weight:600; margin-top:32px; margin-bottom:12px; font-size:18px; }
+  .rte p { margin: 0 0 16px; }
+  .rte ul, .rte ol { padding-left: 24px; margin: 0 0 16px; }
+  .rte li { margin-bottom: 8px; }
+  .rte a { color: var(--bt-lime); text-decoration: underline; text-underline-offset: 3px; }
+</style>

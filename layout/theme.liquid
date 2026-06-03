@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>
+    {%- if page_title -%}{{ page_title }}{%- else -%}{{ shop.name }}{%- endif -%}
+    {% if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif %}
+    {%- unless page_title contains shop.name %} | {{ shop.name }}{%- endunless -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="theme-color" content="{{ settings.color_bg }}" id="theme-color-meta">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- else -%}
+    <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
+  {%- endif -%}
+
+  {%- comment %} Open Graph {% endcomment -%}
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:title" content="{{ page_title | default: shop.name }}">
+  {%- if page_description -%}<meta property="og:description" content="{{ page_description | escape }}">{%- endif -%}
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
+
+  {%- comment %} Theme color tokens (computed) {% endcomment -%}
+  <script>
+    (function(){
+      try{
+        var t = localStorage.getItem('bt-theme') || '{{ settings.default_theme }}';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+      }catch(e){
+        document.documentElement.setAttribute('data-theme', '{{ settings.default_theme }}');
+      }
+    })();
+  </script>
+
+  {{ content_for_header }}
+
+  <style>
+    {{ settings.font_body  | font_face: font_display: 'swap' }}
+    {{ settings.font_display | font_face: font_display: 'swap' }}
+  </style>
+
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;700&display=swap">
+
+  <link rel="stylesheet" href="{{ 'main.css' | asset_url }}">
+</head>
+
+<body class="page-{{ request.page_type }}">
+
+  <a href="#MainContent" class="skip-link">Skip to content</a>
+
+  {%- section 'announcement' -%}
+  {%- section 'header' -%}
+
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {%- section 'footer' -%}
+
+  <script src="{{ 'main.js' | asset_url }}" defer></script>
+</body>
+</html>

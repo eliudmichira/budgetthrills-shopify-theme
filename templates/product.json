@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_vendor": true,
+        "show_reassurance": true
+      },
+      "blocks": {
+        "r1": { "type": "reassurance", "settings": { "text": "Free US shipping over $50" } },
+        "r2": { "type": "reassurance", "settings": { "text": "5–10 day delivery · US warehouses" } },
+        "r3": { "type": "reassurance", "settings": { "text": "30-day no-question returns" } },
+        "i1": { "type": "info_column", "settings": { "heading": "Details", "body": "<p>Details about the product appear here. Add real text in the editor.</p>" } },
+        "i2": { "type": "info_column", "settings": { "heading": "Materials", "body": "<p>Material breakdown.</p>" } },
+        "i3": { "type": "info_column", "settings": { "heading": "Shipping", "body": "<p>Shipping policy.</p>" } }
+      },
+      "block_order": ["r1", "r2", "r3", "i1", "i2", "i3"]
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "More from this drop",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

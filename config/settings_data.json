@@ -1,0 +1,26 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_bg": "#0A0A0A",
+      "color_bg_soft": "#0E0E0E",
+      "color_bg_elev": "#131313",
+      "color_border": "#1C1C1C",
+      "color_text": "#F2F2F2",
+      "color_text_mute": "#6E6E6E",
+      "color_accent": "#BFFF1A",
+      "color_accent_dim": "#5BBF00",
+      "color_orange": "#FF6B2C",
+      "font_body": "inter_n4",
+      "font_display": "inter_n9",
+      "display_letter_spacing": -4,
+      "logo_height": 28,
+      "page_max_width": 1280,
+      "section_padding_y": 96,
+      "show_theme_toggle": true,
+      "default_theme": "dark",
+      "enable_reveals": true,
+      "enable_card_hover": true
+    }
+  }
+}

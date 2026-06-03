@@ -1,0 +1,13 @@
+{%- if recommendations.products_count > 0 -%}
+  <section class="hairline-t section-py">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:16px;">You might also want</div>
+      <h2 class="display h3" style="margin:0 0 48px;">Complete the drop<span class="text-lime">.</span></h2>
+      <div class="product-grid">
+        {%- for product in recommendations.products limit: 4 -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}

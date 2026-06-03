@@ -1,0 +1,72 @@
+{%- assign collection = collections[section.settings.collection] -%}
+
+<section class="section-py">
+  <div class="container">
+    <div class="drop-header" data-reveal>
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="eyebrow" style="margin-bottom:16px;">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        <h2 class="display h1" style="margin:0;line-height:.88;">
+          {{ section.settings.heading_line_1 | escape }}<br>{{ section.settings.heading_line_2 | escape }}<span class="text-lime">.</span>
+        </h2>
+      </div>
+      <div class="drop-meta">
+        {%- if section.settings.body != blank -%}
+          <p class="text-mute" style="font-size:18px;line-height:1.6;margin:0;">{{ section.settings.body | escape }}</p>
+        {%- endif -%}
+        <div style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;">
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ collection.url | default: section.settings.cta_url }}" class="btn-lime">{{ section.settings.cta_text | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.link_text != blank -%}
+            <a href="{{ section.settings.link_url | default: '#' }}" class="link-mute" style="align-self:center;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;">{{ section.settings.link_text | escape }} →</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal>
+      {%- if section.settings.image != blank -%}
+        <div class="card-media" style="aspect-ratio:16/9;">
+          <img src="{{ section.settings.image | image_url: width: 1600 }}" alt="{{ section.settings.heading_line_1 | escape }}">
+        </div>
+      {%- elsif collection.image -%}
+        <div class="card-media" style="aspect-ratio:16/9;">
+          <img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}">
+        </div>
+      {%- else -%}
+        <div class="card-media" style="aspect-ratio:16/9;background:var(--bt-bg-elev);display:flex;align-items:center;justify-content:center;color:var(--bt-text-mute);">
+          [ collection hero image — pick in editor ]
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .drop-header { display:grid; grid-template-columns:1fr; gap:48px; align-items:end; margin-bottom:56px; }
+  @media (min-width: 1024px) {
+    .drop-header { grid-template-columns: 7fr 5fr; }
+    .drop-meta { padding-left: 40px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured drop",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Drop · 04" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "The Neon" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "Collection" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Six pieces. One vibe. Street-ready sneakers and tech accessories built for people who notice details — at prices that don't notice your wallet." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "image_picker", "id": "image", "label": "Hero image (overrides collection image)" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Shop collection" },
+    { "type": "url", "id": "cta_url", "label": "Fallback CTA link" },
+    { "type": "text", "id": "link_text", "label": "Secondary link text", "default": "Lookbook" },
+    { "type": "url", "id": "link_url", "label": "Secondary link url" }
+  ],
+  "presets": [{ "name": "Featured drop" }]
+}
+{% endschema %}
