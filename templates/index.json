@@ -11,19 +11,19 @@
         "line_4": "Different",
         "intro": "Lighting that turns any wall into a vibe. Tech that earns its desk space. Trendy finds, budget prices, real thrills.",
         "cta_primary_text": "Shop the drop",
-        "cta_primary_url": "shopify://collections/new-arrivals",
+        "cta_primary_url": "/collections/new-arrivals",
         "cta_secondary_text": "Today's deals",
-        "cta_secondary_url": "shopify://collections/sale"
+        "cta_secondary_url": "/collections/sale"
       }
     },
     "categories": {
       "type": "categories",
       "settings": { "eyebrow": "The Pillars" },
       "blocks": {
-        "b1": { "type": "category", "settings": { "label": "Lighting", "meta": "From $12.40" } },
-        "b2": { "type": "category", "settings": { "label": "Tech & Desk", "meta": "From $34.99" } },
-        "b3": { "type": "category", "settings": { "label": "Wellness", "meta": "From $29.99" } },
-        "b4": { "type": "category", "settings": { "label": "Home & Lifestyle", "meta": "From $24.40" } }
+        "b1": { "type": "category", "settings": { "label": "Lighting",         "meta": "From $34.99", "link": "/collections/lighting" } },
+        "b2": { "type": "category", "settings": { "label": "Tech & Desk",      "meta": "From $24.99", "link": "/collections/tech-desk" } },
+        "b3": { "type": "category", "settings": { "label": "Wellness",         "meta": "From $19.99", "link": "/collections/wellness" } },
+        "b4": { "type": "category", "settings": { "label": "Home & Lifestyle", "meta": "From $24.99", "link": "/collections/home-lifestyle" } }
       },
       "block_order": ["b1", "b2", "b3", "b4"]
     },
@@ -43,6 +43,7 @@
         "eyebrow": "Ends Tonight",
         "heading_line_1": "One drop.",
         "heading_line_2": "One night",
+        "product": "moon-lamp-galaxy-edition",
         "cta_text": "Cop the deal"
       }
     },
@@ -79,6 +80,16 @@
         "show_view_all": true
       }
     },
+    "lifestyle_grid": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "The Pillar · 04",
+        "heading": "Home stuff",
+        "collection": "home-lifestyle",
+        "products_to_show": 4,
+        "show_view_all": true
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -90,5 +101,5 @@
       }
     }
   },
-  "order": ["hero", "categories", "trending", "deal", "drop", "tech_grid", "wellness_grid", "newsletter"]
+  "order": ["hero", "categories", "trending", "deal", "drop", "tech_grid", "wellness_grid", "lifestyle_grid", "newsletter"]
 }
