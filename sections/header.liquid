@@ -42,7 +42,7 @@
           </svg>
         </a>
 
-        {%- if shop.customer_accounts_enabled -%}
+        {%- if section.settings.show_sign_in and shop.customer_accounts_enabled -%}
           {%- if customer -%}
             <a href="{{ routes.account_url }}" aria-label="Account">Account</a>
           {%- else -%}
@@ -84,6 +84,13 @@
       "id": "menu",
       "label": "Main menu",
       "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sign_in",
+      "label": "Show Sign in / Account link",
+      "info": "Off by default while pre-revenue. Turn on once you want customer accounts in the nav.",
+      "default": false
     }
   ],
   "presets": [{ "name": "Header" }]
