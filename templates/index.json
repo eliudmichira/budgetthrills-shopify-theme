@@ -20,10 +20,10 @@
       "type": "categories",
       "settings": { "eyebrow": "The Pillars" },
       "blocks": {
-        "b1": { "type": "category", "settings": { "label": "Lighting",         "meta": "Mood lighting" } },
-        "b2": { "type": "category", "settings": { "label": "Tech & Desk",      "meta": "Desk upgrades" } },
-        "b3": { "type": "category", "settings": { "label": "Wellness",         "meta": "Reset mode" } },
-        "b4": { "type": "category", "settings": { "label": "Home & Lifestyle", "meta": "Home stuff" } }
+        "b1": { "type": "category", "settings": { "label": "Lighting",         "meta": "Mood lighting", "link": "/collections/lighting" } },
+        "b2": { "type": "category", "settings": { "label": "Tech & Desk",      "meta": "Desk upgrades", "link": "/collections/tech-desk" } },
+        "b3": { "type": "category", "settings": { "label": "Wellness",         "meta": "Reset mode",    "link": "/collections/wellness" } },
+        "b4": { "type": "category", "settings": { "label": "Home & Lifestyle", "meta": "Home stuff",    "link": "/collections/home-lifestyle" } }
       },
       "block_order": ["b1", "b2", "b3", "b4"]
     },
@@ -35,6 +35,16 @@
         "collection": "new-arrivals",
         "products_to_show": 8,
         "show_view_all": true
+      }
+    },
+    "deal": {
+      "type": "deal-of-day",
+      "settings": {
+        "eyebrow": "Ends Tonight",
+        "heading_line_1": "One drop.",
+        "heading_line_2": "One night",
+        "product": "aurora-borealis-starry-sky-projector-led-star-projector-night-light-with-remote-galaxy-star-projector-with-7-lighting-effects",
+        "cta_text": "Cop the deal"
       }
     },
     "drop": {
@@ -68,6 +78,16 @@
         "show_view_all": true
       }
     },
+    "lifestyle_grid": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "The Pillar · 04",
+        "heading": "Home & Lifestyle",
+        "collection": "home-lifestyle",
+        "products_to_show": 4,
+        "show_view_all": true
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -79,5 +99,5 @@
       }
     }
   },
-  "order": ["hero", "categories", "trending", "drop", "tech_grid", "wellness_grid", "newsletter"]
+  "order": ["hero", "categories", "trending", "deal", "drop", "tech_grid", "wellness_grid", "lifestyle_grid", "newsletter"]
 }
