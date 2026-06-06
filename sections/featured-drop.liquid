@@ -35,6 +35,10 @@
         <div class="card-media" style="aspect-ratio:16/9;">
           <img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}">
         </div>
+      {%- elsif collection.products.first.featured_image -%}
+        <div class="card-media" style="aspect-ratio:16/9;">
+          <img src="{{ collection.products.first.featured_image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}">
+        </div>
       {%- else -%}
         <div class="card-media" style="aspect-ratio:16/9;background:var(--bt-bg-elev);display:flex;align-items:center;justify-content:center;color:var(--bt-text-mute);">
           [ collection hero image — pick in editor ]
