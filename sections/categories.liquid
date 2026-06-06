@@ -48,14 +48,14 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Categories" }
   ],
-  "default": {
+  "presets": [{
+    "name": "Category strip",
     "blocks": [
       { "type": "category", "settings": { "label": "Lighting",         "meta": "From $34.99" } },
       { "type": "category", "settings": { "label": "Tech & Desk",      "meta": "From $24.99" } },
       { "type": "category", "settings": { "label": "Wellness",         "meta": "From $19.99" } },
       { "type": "category", "settings": { "label": "Home & Lifestyle", "meta": "From $24.99" } }
     ]
-  },
-  "presets": [{ "name": "Category strip" }]
+  }]
 }
 {% endschema %}
